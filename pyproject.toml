@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-dal-518 = "dal_518:main"
+dal-518 = "ChronoGraph-EEG:main"
 
 [build-system]
 requires = ["uv_build>=0.12.6,<0.13.0"]

@@ -8,3 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
+
+# EEG data and generated experiment artifacts
+data/raw/*
+!data/raw/README.md
+data/interim/*
+data/processed/*
+experiments/*
+!experiments/.gitkeep
+results/tables/*
+results/figures/*

@@ -18,3 +18,5 @@ experiments/*
 !experiments/.gitkeep
 results/tables/*
 results/figures/*
+
+.env

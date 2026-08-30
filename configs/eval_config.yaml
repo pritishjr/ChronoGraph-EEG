@@ -1,0 +1,7 @@
+cv_strategy: leave_one_subject_out
+metrics:
+  - sensitivity
+  - specificity
+  - auroc
+  - false_alarms_per_hour
+seed: 518

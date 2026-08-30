@@ -1,0 +1,6 @@
+gnn_type: gat
+temporal_module: gru
+hidden_dim: 64
+temporal_layers: 1
+learning_rate: 0.001
+epochs: 50

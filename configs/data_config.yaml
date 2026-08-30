@@ -1,0 +1,5 @@
+window_size_seconds: 5.0
+overlap_seconds: 2.5
+sampling_rate_hz: 256
+bandpass_hz: [0.5, 70.0]
+reference: average

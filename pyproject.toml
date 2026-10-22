@@ -1,7 +1,7 @@
 [project]
-name = "dal-518"
+name = "chronograph-seizure"
 version = "0.1.0"
-description = "Add your description here"
+description = "Dynamic graph learning tools for seizure analysis from EEG"
 readme = "README.md"
 authors = [
     { name = "pritishjr", email = "pritishjr.personal@gmail.com" }
@@ -11,6 +11,7 @@ dependencies = [
     "matplotlib>=3.11.1",
     "mne>=1.12.1",
     "networkx>=3.6.1",
+    "pyyaml>=6.0",
     "pytest>=9.1.1",
     "scikit-learn>=1.9.0",
     "torch>=2.13.0",
@@ -18,7 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-dal-518 = "ChronoGraph-EEG:main"
+chronograph = "chronograph:main"
 
 [build-system]
 requires = ["uv_build>=0.12.6,<0.13.0"]

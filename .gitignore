@@ -17,6 +17,11 @@ data/processed/*
 experiments/*
 !experiments/.gitkeep
 results/tables/*
+!results/tables/.gitkeep
+!results/tables/*.csv
 results/figures/*
+!results/figures/.gitkeep
+!results/figures/*/
+!results/figures/*/.gitkeep
 
 .env

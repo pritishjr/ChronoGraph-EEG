@@ -35,8 +35,8 @@ Record each P0 pipeline decision, its rationale, and the validation used.
 
 ## Values To Set Before P1
 
-- Canonical channels: **TBD**. Set after the channel audit.
-- Selected subject subset: **TBD**. Select subjects with the same canonical channels.
-- Excluded subjects and reasons: **TBD**. Record them in the channel audit.
+- Canonical channels: **23 bipolar channel positions**. They are shared by the selected subject subset. The source EDF header repeats the `T8-P8` label, so the audit has 23 positions and 22 unique names.
+- Selected subject subset: **chb01, chb02, chb03, chb05, chb06, chb07, chb08, chb10, chb23, chb24**.
+- Excluded subjects and reasons: **chb04, chb09, chb11, chb12, chb13, chb15, chb16, chb17, chb18, chb19** have changing channel layouts. **chb14, chb20, chb21, chb22** have stable 28-channel layouts that differ from the selected 23-channel layout.
 - Top-k edges per node: **TBD**. Set after the channel count is fixed.
-- Tensor node count and shapes: **TBD**. Set after the canonical channel set is fixed.
+- Tensor node count and shapes: **23 nodes**, adjacency `[23, 23]`, node features `[23, 5]`.

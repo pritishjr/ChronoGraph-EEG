@@ -1,11 +1,12 @@
-PYTHON ?= python
+PYTHON = python3
 
-.PHONY: data graphs train eval figures test
+.PHONY: p1 data graphs train eval figures test
+
+p1:
+	PYTHONPATH=src $(PYTHON) -m chronograph.data.channel_audit
 
 data:
-	$(PYTHON) scripts/01_audit_and_download.py
-	$(PYTHON) scripts/02_preprocess.py
-	$(PYTHON) scripts/03_segment.py
+	$(MAKE) p1
 
 graphs:
 	$(PYTHON) scripts/04_build_graphs.py

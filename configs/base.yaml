@@ -3,9 +3,32 @@
 data:
   dataset: chb-mit
   sampling_rate_hz: 256
-  canonical_channels: TBD
-  selected_subjects: TBD
-  excluded_subjects: TBD
+  canonical_channels:
+    - FP1-F7
+    - F7-T7
+    - T7-P7
+    - P7-O1
+    - FP1-F3
+    - F3-C3
+    - C3-P3
+    - P3-O1
+    - FP2-F4
+    - F4-C4
+    - C4-P4
+    - P4-O2
+    - FP2-F8
+    - F8-T8
+    - T8-P8
+    - P8-O2
+    - FZ-CZ
+    - CZ-PZ
+    - P7-T7
+    - T7-FT9
+    - FT9-FT10
+    - FT10-T8
+    - T8-P8
+  selected_subjects: [chb01, chb02, chb03, chb05, chb06, chb07, chb08, chb10, chb23, chb24]
+  excluded_subjects: [chb04, chb09, chb11, chb12, chb13, chb14, chb15, chb16, chb17, chb18, chb19, chb20, chb21, chb22]
   channel_audit: data/manifests/channel_audit.csv
   segments_manifest: data/manifests/segments.csv
   folds_manifest: data/manifests/folds.json
@@ -53,9 +76,9 @@ graphs:
   chunk_boundary_rule: fully_inside_one_segment
 
 tensors:
-  nodes: TBD
-  adjacency_shape: [TBD, TBD]
-  node_features_shape: [TBD, 5]
+  nodes: 23
+  adjacency_shape: [23, 23]
+  node_features_shape: [23, 5]
 
 tasks:
   main: three_class

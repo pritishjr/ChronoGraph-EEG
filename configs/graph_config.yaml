@@ -1,8 +1,0 @@
-connectivity_metric: pearson
-edge_threshold: 0.3
-node_features:
-  - delta_power
-  - theta_power
-  - alpha_power
-  - beta_power
-  - gamma_power

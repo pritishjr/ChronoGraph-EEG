@@ -1,0 +1,7 @@
+model:
+  name: gru
+  tier: T1
+  role: dynamic_baseline
+  graph_encoder: gnn
+  temporal_encoder: gru
+  output_classes: 3

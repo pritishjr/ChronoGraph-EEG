@@ -1,0 +1,6 @@
+model:
+  name: static
+  tier: T1
+  role: non_temporal_graph_baseline
+  algorithm: gcn_or_gat
+  output_classes: 3

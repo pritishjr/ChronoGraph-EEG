@@ -1,0 +1,6 @@
+model:
+  name: svm
+  tier: T1
+  role: untuned_classical_floor
+  algorithm: support_vector_machine
+  output_classes: 3

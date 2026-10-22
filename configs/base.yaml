@@ -1,0 +1,83 @@
+# Shared data, graph, task, split, and run settings.
+
+data:
+  dataset: chb-mit
+  sampling_rate_hz: 256
+  canonical_channels: TBD
+  selected_subjects: TBD
+  excluded_subjects: TBD
+  channel_audit: data/manifests/channel_audit.csv
+  segments_manifest: data/manifests/segments.csv
+  folds_manifest: data/manifests/folds.json
+
+preprocessing:
+  bandpass_hz: [0.5, 40.0]
+  bandpass_zero_phase: true
+  notch_hz: 60.0
+  reference: common_average
+  amplitude_rejection_uv: 500.0
+  use_ica: false
+  normalization:
+    method: z_score
+    statistics_scope: subject
+    statistics_source: interictal_only
+    share_statistics_across_subjects: false
+
+segmentation:
+  labels: [interictal, preictal, ictal]
+  preictal_horizon_minutes: 30
+  interictal_buffer_hours: 4
+  exclude_postictal: true
+  label_source: segment
+  mixed_window_labels: false
+
+graphs:
+  window_seconds: 5
+  window_overlap: 0.5
+  connectivity: pearson
+  sparsification: top_k_per_node
+  top_k: TBD
+  node_features:
+    type: band_power
+    bands_hz:
+      delta: [0.5, 4.0]
+      theta: [4.0, 8.0]
+      alpha: [8.0, 13.0]
+      beta: [13.0, 30.0]
+      gamma: [30.0, 40.0]
+  chunk_windows: 60
+  chunk_stride_windows:
+    train: 30
+    validation: 60
+    test: 60
+  chunk_boundary_rule: fully_inside_one_segment
+
+tensors:
+  nodes: TBD
+  adjacency_shape: [TBD, TBD]
+  node_features_shape: [TBD, 5]
+
+tasks:
+  main: three_class
+  secondary: preictal_vs_interictal
+  class_labels:
+    three_class: [interictal, preictal, ictal]
+    preictal_vs_interictal: [interictal, preictal]
+
+splits:
+  method: leave_one_subject_out
+  validation_source: training_subjects
+  validation_group: seizure_id
+  held_out_subject_used_for_tuning: false
+  seizure_cross_split_allowed: false
+
+training:
+  imbalance_method: weighted_cross_entropy
+  undersample_interictal: true
+  undersample_scope: training_folds_only
+  seed: 42
+
+config_merge:
+  base: configs/base.yaml
+  model_override: configs/models/
+  rule: model_file_overrides_base

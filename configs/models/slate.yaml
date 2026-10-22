@@ -1,0 +1,12 @@
+model:
+  name: slate
+  tier: T2
+  role: main_spatio_temporal_model
+  graph_encoder: graph_transformer
+  temporal_encoding: supra_laplacian_eigenvectors
+  output_classes: 3
+  attention_readout: true
+  cache_eigenvectors: true
+  cost_gate:
+    benchmark_one_chunk: true
+    fallback: shorter_chunk_or_fewer_channels

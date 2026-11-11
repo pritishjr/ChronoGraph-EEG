@@ -38,7 +38,7 @@ def read_edf_header(path: Path) -> EdfHeader:
         int(_field(header, samples_start + index * 8, 8))
         for index in range(signal_count)
     )
-    duration_start = 236
+    duration_start = 244
     record_duration = float(_field(fixed, duration_start, 8))
     if record_duration <= 0 or len(set(samples_per_record)) != 1:
         raise ValueError("EDF has invalid or mixed signal timing")

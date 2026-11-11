@@ -37,20 +37,23 @@ preprocessing:
   bandpass_hz: [0.5, 40.0]
   bandpass_zero_phase: true
   notch_hz: 60.0
-  reference: common_average
+  reference: bipolar_native
   amplitude_rejection_uv: 500.0
   use_ica: false
   normalization:
     method: z_score
     statistics_scope: subject
-    statistics_source: interictal_only
+    statistics_source: all_subject_data
     share_statistics_across_subjects: false
 
 segmentation:
   labels: [interictal, preictal, ictal]
   preictal_horizon_minutes: 30
   interictal_buffer_hours: 4
+  retained_interictal_hours_per_subject: 2
   exclude_postictal: true
+  prediction_horizon_minutes: 5
+  max_file_gap_seconds: 30
   label_source: segment
   mixed_window_labels: false
 
@@ -59,7 +62,7 @@ graphs:
   window_overlap: 0.5
   connectivity: pearson
   sparsification: top_k_per_node
-  top_k: TBD
+  top_k: 5
   node_features:
     type: band_power
     bands_hz:
@@ -68,17 +71,20 @@ graphs:
       alpha: [8.0, 13.0]
       beta: [13.0, 30.0]
       gamma: [30.0, 40.0]
-  chunk_windows: 60
+  chunk_windows: 12
   chunk_stride_windows:
-    train: 30
+    train: 60
     validation: 60
     test: 60
   chunk_boundary_rule: fully_inside_one_segment
+  edge_weight: absolute_pearson
+  edge_sign_feature: true
 
 tensors:
   nodes: 23
   adjacency_shape: [23, 23]
   node_features_shape: [23, 5]
+  preprocessed_window_dtype: float16
 
 tasks:
   main: three_class
@@ -93,6 +99,9 @@ splits:
   validation_group: seizure_id
   held_out_subject_used_for_tuning: false
   seizure_cross_split_allowed: false
+  subject_groups:
+    chb01: patient_01
+    chb21: patient_01
 
 training:
   imbalance_method: weighted_cross_entropy

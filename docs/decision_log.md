@@ -32,11 +32,14 @@ Record each P0 pipeline decision, its rationale, and the validation used.
 | Held-out subject tuning | Never allowed | Prevent test leakage | Check training logs |
 | Class imbalance | Weighted cross-entropy or focal loss | Reduce class bias | Check merged model config |
 | Interictal undersampling | Training folds only | Do not alter validation or test data | Check sampler inputs |
+| P2 retained interictal data | 2 hours per subject, stored as 5-second windows | Bound storage before P3 while keeping all selected subjects | Check output window count |
+| P2 output | Retained labeled windows in float16 NPZ files | Avoid full continuous-file materialization | Check output shape and labels |
 
 ## Values To Set Before P1
 
 - Canonical channels: **23 bipolar channel positions**. They are shared by the selected subject subset. The source EDF header repeats the `T8-P8` label, so the audit has 23 positions and 22 unique names.
 - Selected subject subset: **chb01, chb02, chb03, chb05, chb06, chb07, chb08, chb10, chb23, chb24**.
 - Excluded subjects and reasons: **chb04, chb09, chb11, chb12, chb13, chb15, chb16, chb17, chb18, chb19** have changing channel layouts. **chb14, chb20, chb21, chb22** have stable 28-channel layouts that differ from the selected 23-channel layout.
-- Top-k edges per node: **TBD**. Set after the channel count is fixed.
+- Top-k edges per node: **5**. Keep five strongest absolute Pearson edges per node.
+- Model D eigenvector cache: **`data/processed/eigenvectors/` keyed by adjacency hash**. Avoid repeated supra-Laplacian decompositions.
 - Tensor node count and shapes: **23 nodes**, adjacency `[23, 23]`, node features `[23, 5]`.

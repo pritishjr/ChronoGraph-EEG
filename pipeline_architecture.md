@@ -8,8 +8,8 @@ three-class classification: interictal, preictal, and ictal.
 ```
 Raw EEG
   -> P1 Acquisition and channel audit
-  -> P2 Preprocessing
   -> P3 Segmentation
+  -> P2 Preprocessing
   -> P4 Graph construction and chunking
   -> P5 LOSO splits
   -> P6 Models
@@ -23,8 +23,8 @@ Raw EEG
 |---|---|---|
 | P0 | Data contract | Fixed data and tensor rules |
 | P1 | Acquisition and channel audit | Raw files and channel report |
-| P2 | Preprocessing | Clean EEG |
 | P3 | Segmentation | Segment manifest |
+| P2 | Preprocessing | Clean EEG |
 | P4 | Graph construction and chunking | Graph chunks |
 | P5 | Splits | LOSO fold manifest |
 | P6 | Models | Models A to D |
@@ -104,9 +104,9 @@ rates, files, and exclusions.
 
 **Purpose:** Create clean, subject-local EEG.
 
-**Input:** Verified EDF files and the channel audit.
+**Input:** Verified EDF files, the channel audit, and `data/manifests/segments.csv`.
 
-**Output:** Clean continuous EEG in `data/interim/`.
+**Output:** Retained labeled 5-second windows in `data/interim/<subject>`.
 
 **Must build:**
 
@@ -118,6 +118,9 @@ rates, files, and exclusions.
 - [T1] Resample or verify data at 256 Hz.
 - [T1] Mark windows above 500 µV as rejected.
 - [T1] Compute each subject's z-score statistics from interictal data only.
+- [T1] Retain all preictal and ictal windows.
+- [T1] Retain at most the configured interictal hours per subject.
+- [T1] Store retained windows as float16 arrays with labels.
 - [T1] Record rejected samples for every file.
 
 **Done when:** One checked plot shows no flat channels and the preprocessing log
@@ -127,9 +130,9 @@ has one entry for every selected file.
 
 **Purpose:** Create non-overlapping labeled segments.
 
-**Input:** Clean EEG and seizure annotations.
+**Input:** Verified EDF files and seizure annotations.
 
-**Output:** `data/manifests/segments.csv`.
+**Output:** `data/manifests/segments.csv` and `data/manifests/segment_counts.csv`.
 
 **Must build:**
 
@@ -237,7 +240,8 @@ its forward and backward test.
 - [T1] Stop early on validation macro-F1.
 - [T1] Save the best checkpoint.
 - [T1] Save the merged config, logs, and metrics.
-- [T1] Train Models A, B, and C on all LOSO folds.
+- [T1] Train Model A on all LOSO folds.
+- [T2] Train Model D on all LOSO folds after the cost gate passes.
 - [T2] Train Model D only after M1 and its cost gate pass.
 - [T2] Run the preictal-versus-interictal task.
 - [T1] Never tune on the held-out subject.
@@ -325,8 +329,8 @@ CHB-MIT run can resume from saved artifacts.
 | Phase | Needs |
 |---|---|
 | P1 | P0 |
-| P2 | P1 |
-| P3 | P2 |
+| P2 | P1 and P3 |
+| P3 | P1 |
 | P4 | P3 |
 | P5 | P4 |
 | P6 | P4 data shapes |

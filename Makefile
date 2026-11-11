@@ -1,24 +1,32 @@
-PYTHON = python3
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: p1 data graphs train eval figures test
+.PHONY: p1 p2 p3 p4 p5 data graphs train test
 
 p1:
 	PYTHONPATH=src $(PYTHON) -m chronograph.data.channel_audit
 
+p2:
+	PYTHONPATH=src $(PYTHON) -m chronograph.data.preprocessing
+
+p3:
+	PYTHONPATH=src $(PYTHON) -m chronograph.data.segmentation
+
+p4:
+	PYTHONPATH=src $(PYTHON) -m chronograph.graphs.graph_builder
+
+p5:
+	PYTHONPATH=src $(PYTHON) -m chronograph.splits
+
 data:
 	$(MAKE) p1
+	$(MAKE) p3
+	$(MAKE) p2
 
 graphs:
-	$(PYTHON) scripts/04_build_graphs.py
+	$(MAKE) p4
 
 train:
-	$(PYTHON) scripts/06_train.py
-
-eval:
-	$(PYTHON) scripts/07_evaluate.py
-
-figures:
-	$(PYTHON) scripts/09_make_figures.py
+	PYTHONPATH=src $(PYTHON) -m chronograph.training --help
 
 test:
 	$(PYTHON) -m pytest

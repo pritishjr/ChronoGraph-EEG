@@ -23,8 +23,8 @@ in the repository.
 
 ## Pipeline
 
-Run phases individually with `make data`, `make graphs`, `make train`, `make eval`,
-and `make figures`. The numbered scripts in `scripts/` define the execution order.
+Run available phases individually with `make data`, `make graphs`, `make p5`,
+`make train`, and `make test`.
 
 Configuration is split by data, graph, model, experiment, and evaluation concerns
 under `configs/`. The updated package layout is documented in `file-structure.md`.

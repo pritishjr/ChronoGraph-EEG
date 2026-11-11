@@ -4,9 +4,14 @@ model:
   role: main_spatio_temporal_model
   graph_encoder: graph_transformer
   temporal_encoding: supra_laplacian_eigenvectors
+  hidden_dim: 32
+  eigenvectors: 8
+  learning_rate: 0.001
+  patience: 3
   output_classes: 3
   attention_readout: true
   cache_eigenvectors: true
+  eigenvector_cache_dir: data/processed/eigenvectors
   cost_gate:
     benchmark_one_chunk: true
     fallback: shorter_chunk_or_fewer_channels
